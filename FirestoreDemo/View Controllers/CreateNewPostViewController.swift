@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseFirestore
 
 class CreateNewPostViewController: UIViewController {
     
@@ -17,8 +18,8 @@ class CreateNewPostViewController: UIViewController {
             handleInvalidFields()
             return
         }
-        
-        let newPost = Post(title: title, body: body, userUID: user.uid)
+        let timeStamp = Timestamp(date: Date())
+        let newPost = Post(title: title, body: body, userUID: user.uid, date: timeStamp, comments: [Comment]())
         
         FirestoreService.manager.create(newPost) { [weak self] (result) in
             self?.handlePostResponse(withResult: result)
